@@ -66,8 +66,10 @@ public class Model {
     }
 
     public void removeTree(int x, int y) {
-        int TestX = Math.floorDiv(x, Tree.getW()) * Tree.getW(); // creating test coordinates to loop through
-        int TestY = Math.floorDiv(y, Tree.getH()) * Tree.getH(); // to find a match, indicating tree to be removed
+        int TestX = Math.floorDiv(x + View.getCurrentRoomX(),
+                Tree.getW()) * Tree.getW(); // creating test coordinates to loop through
+        int TestY = Math.floorDiv(y + View.getCurrentRoomY(),
+                Tree.getH()) * Tree.getH(); // to find a match, indicating tree to be removed
         for (int i = 0; i < trees.size(); i++) {
             if (TestX == trees.get(i).getX() && TestY == trees.get(i).getY()) //noinspection SingleStatementInBlock
             {

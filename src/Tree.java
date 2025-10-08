@@ -41,8 +41,8 @@ public class Tree {
         int treeCounter = 0;
         for (int i = trees.size() - 1; i >= 0; i--) { // sprite.size()
             Tree currentTree = trees.get(i);
-            if (currentTree.getX() == Math.floorDiv(mouseX, Tree.getW()) * Tree.getW() &&
-                    currentTree.getY() == Math.floorDiv(mouseY, Tree.getH()) * Tree.getH()) // sprite.getW(), sprite.getH()
+            if (currentTree.getX() == Math.floorDiv(mouseX + View.getCurrentRoomX(), Tree.getW()) * Tree.getW() &&
+                    currentTree.getY() == Math.floorDiv(mouseY + View.getCurrentRoomY(), Tree.getH()) * Tree.getH()) // sprite.getW(), sprite.getH()
                 treeCounter++; // spriteCounter++
         }
 

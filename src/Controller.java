@@ -33,15 +33,15 @@ public class Controller implements ActionListener, MouseListener, KeyListener
 
     public void mousePressed(MouseEvent e) {
         if (editMode && addMapItem) {
-            if (!Tree.treeExists(e.getX() + View.getCurrentRoomX(), // check if a tree exists at the
-                    e.getY()+View.getCurrentRoomY(), Model.getTrees())) {                     // specified spot
+            if (!Tree.treeExists(e.getX(), // check if a tree exists at the
+                    e.getY(), Model.getTrees())) {                     // specified spot
                 model.addTree(e.getX(), e.getY());// if not, add a tree to our arraylist and
             }
         }
-        if(editMode && !addMapItem && Tree.treeExists(e.getX() + View.getCurrentRoomX(),
-                e.getY() + View.getCurrentRoomY(), Model.getTrees()))
+        if(editMode && !addMapItem && Tree.treeExists(e.getX(),
+                e.getY(), Model.getTrees()))
         {
-            model.removeTree(e.getX() + View.getCurrentRoomX(), e.getY() + View.getCurrentRoomY()); // removes tree where mouse clicks.
+            model.removeTree(e.getX(), e.getY()); // removes tree where mouse clicks.
         }
 
     }
