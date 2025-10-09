@@ -9,26 +9,26 @@ import java.util.Objects;
 
 public class Link
 {
-    private static int px = 100, py = 100;
-    private static int x, y; // Since we only have one Link, I will make this static for easier access.
-    private static final double SPEED = 8;
+    private int px = 100, py = 100;
+    private int x, y, width, height; // Since we only have one Link, I will make this static for easier access.
+    private double speed = 8;
+    public static final int LINK_WIDTH = 40, LINK_HEIGHT = 63;
     private static BufferedImage[][] linkImages;
-    private static final int LINK_WIDTH = 40;
-    private static final int LINK_HEIGHT = 63;
-    private static int currentLinkFrame = 0;
-    private static int currentLinkDirection = 0;
-    private static final int NUM_DIRECTIONS = 4;
-    private static final int MAX_IMAGES_PER_DIRECTION = 11;
+    private int currentLinkFrame = 0;
+    private int currentLinkDirection = 0;
+    private final int LINK_NUM_DIRECTIONS = 4, LINK_MAX_IMAGES_PER_DIRECTION = 11;
 
     public Link(int x, int y)
     {
-        Link.x = x;
-        Link.y = y;
+        this.x = x;
+        this.y = y;
+        width = LINK_WIDTH;
+        height = LINK_HEIGHT;
         int index = 1;
-        linkImages = new BufferedImage[NUM_DIRECTIONS]
-                [MAX_IMAGES_PER_DIRECTION];
-        for(int i = 0; i < NUM_DIRECTIONS; i++)
-            for(int j = 0; j < MAX_IMAGES_PER_DIRECTION; j++) {
+        linkImages = new BufferedImage[LINK_NUM_DIRECTIONS]
+                [LINK_MAX_IMAGES_PER_DIRECTION];
+        for(int i = 0; i < LINK_NUM_DIRECTIONS; i++)
+            for(int j = 0; j < LINK_MAX_IMAGES_PER_DIRECTION; j++) {
                 if(linkImages[i][j] == null){
                     linkImages[i][j] = View.loadImage("images/link" +
                             (index++) + ".png");
@@ -39,94 +39,82 @@ public class Link
     public void moveYoBody(String direction)
     {
         if(Objects.equals(direction, "left")) {
-            x -= (int) SPEED;
+            x -= (int) speed;
         }
         if(Objects.equals(direction, "right")) {
-            x += (int) SPEED;
+            x += (int) speed;
         }
         if(Objects.equals(direction, "up")) {
             System.out.println(this);
-            y -= (int) SPEED;
+            y -= (int) speed;
         }
         if(Objects.equals(direction, "down")) {
-            y += (int) SPEED;
+            y += (int) speed;
         }
 
     }
 
-    public static int getPx() {
-        return px;
+    public int getPx() { return this.px; }
+
+    public int getPy() {
+        return this.py;
     }
 
-    public static int getPy() {
-        return py;
+    public void setPx(int x) { this.px = x; }
+
+    public void setPy(int y) {
+        this.py = y;
     }
 
-    public static void setPx(int x) {
-        Link.px = x;
-    }
+    public int getX() { return this.x; }
 
-    public static void setPy(int y) {
-        Link.py = y;
-    }
+    public int getY() { return this.y; }
 
-    public static int getX() {
-        return x;
-    }
+    public int getW() { return width; }
 
-    public static int getY() {
-        return y;
-    }
+    public int getH() { return height; }
 
-    public static int getW() {
-        return LINK_WIDTH;
-    }
-
-    public static int getH() {
-        return LINK_HEIGHT;
-    }
-
-    public static void setCoords(int x, int y)
+    public void setCoords(int x, int y)
     {
-        Link.x = x;
-        Link.y = y;
+        this.x = x;
+        this.y = y;
     }
 
-    public static int getRightSide()
+    public int getRightSide()
     {
-        return Link.getX() + Link.getW();
+        return this.getX() + this.getW();
     }
 
-    public static int getRoots()
+    public int getRoots()
     {
-        return Link.getY() + Link.getH();
+        return this.getY() + this.getH();
     }
 
-    public static int getLeftSide()
+    public int getLeftSide()
     {
-        return Link.getX();
+        return this.getX();
     }
 
-    public static int getTop()
+    public int getTop()
     {
-        return Link.getY();
+        return this.getY();
     }
 
-    public static void setCurrentLinkDirection(int currentLinkDirection)
+    public void setCurrentLinkDirection(int newLinkDirection)
     {
-        Link.currentLinkDirection = currentLinkDirection;
+        currentLinkDirection = newLinkDirection;
     }
 
-    public static void updateLinkAnimationSequenceFrame()
+    public void updateLinkAnimationSequenceFrame()
     {
-        if(++currentLinkFrame >= MAX_IMAGES_PER_DIRECTION)
+        if(++currentLinkFrame >= LINK_MAX_IMAGES_PER_DIRECTION)
             currentLinkFrame = 0;
     }
 
-    public static void drawYourself(Graphics g)
+    public void drawYourself(Graphics g)
     {
-        g.drawImage(linkImages[currentLinkDirection][currentLinkFrame], Link.getX() - View.getCurrentRoomX(),
-                Link.getY() - View.getCurrentRoomY(), LINK_WIDTH, LINK_HEIGHT, null);
+        g.drawImage(linkImages[currentLinkDirection][currentLinkFrame], this.getX() - View.getCurrentRoomX(),
+                this.getY() - View.getCurrentRoomY(), width, height, null);
     }
 
     @Override

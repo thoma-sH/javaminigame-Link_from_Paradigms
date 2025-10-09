@@ -33,12 +33,12 @@ public class Controller implements ActionListener, MouseListener, KeyListener
 
     public void mousePressed(MouseEvent e) {
         if (editMode && addMapItem) {
-            if (!Tree.treeExists(e.getX() + View.getCurrentRoomX(), // check if a tree exists at the
+            if (!model.getTree().treeExists(e.getX() + View.getCurrentRoomX(), // check if a tree exists at the
                     e.getY()+View.getCurrentRoomY(), Model.getTrees())) {                     // specified spot
                 model.addTree(e.getX(), e.getY());// if not, add a tree to our arraylist and
             }
         }
-        if(editMode && !addMapItem && Tree.treeExists(e.getX() + View.getCurrentRoomX(),
+        if(editMode && !addMapItem && model.getTree().treeExists(e.getX() + View.getCurrentRoomX(),
                 e.getY() + View.getCurrentRoomY(), Model.getTrees()))
         {
             model.removeTree(e.getX() + View.getCurrentRoomX(), e.getY() + View.getCurrentRoomY()); // removes tree where mouse clicks.
@@ -127,36 +127,36 @@ public class Controller implements ActionListener, MouseListener, KeyListener
 
     public boolean update()
     {
-        Link.setPx(Link.getX());
-        Link.setPy(Link.getY());
+        model.getLink().setPx(model.getLink().getX());
+        model.getLink().setPy(model.getLink().getY());
 
         if(keyRight)
         {
             model.tellLinkToMoveYoBody("right");
-            Link.updateLinkAnimationSequenceFrame();
-            Link.setCurrentLinkDirection(RIGHT_ENUM);
+            model.getLink().updateLinkAnimationSequenceFrame();
+            model.getLink().setCurrentLinkDirection(RIGHT_ENUM);
 
         }
 
         if(keyLeft)
         {
             model.tellLinkToMoveYoBody("left");
-            Link.updateLinkAnimationSequenceFrame();
-            Link.setCurrentLinkDirection(LEFT_ENUM);
+            model.getLink().updateLinkAnimationSequenceFrame();
+            model.getLink().setCurrentLinkDirection(LEFT_ENUM);
         }
 
         if(keyUp)
         {
             model.tellLinkToMoveYoBody("up");
-            Link.updateLinkAnimationSequenceFrame();
-            Link.setCurrentLinkDirection(UP_ENUM);
+            model.getLink().updateLinkAnimationSequenceFrame();
+            model.getLink().setCurrentLinkDirection(UP_ENUM);
         }
 
         if(keyDown)
         {
             model.tellLinkToMoveYoBody("down");
-            Link.updateLinkAnimationSequenceFrame();
-            Link.setCurrentLinkDirection(DOWN_ENUM);
+            model.getLink().updateLinkAnimationSequenceFrame();
+            model.getLink().setCurrentLinkDirection(DOWN_ENUM);
         }
 
         return keepGoing;

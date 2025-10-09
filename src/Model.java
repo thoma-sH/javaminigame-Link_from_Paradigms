@@ -3,7 +3,6 @@
 // Assignment 3 - Collision detection and debugging
 
 import java.util.ArrayList;
-import java.io.*;
 
 public class Model {
     private static ArrayList<Tree> trees;
@@ -11,8 +10,11 @@ public class Model {
 
     public Model()
     {
+        int arbitraryX = 9999;
+        int arbitraryY = 9999;
         trees = new ArrayList<>();
         link = new Link(100, 100);
+        trees.add(new Tree(arbitraryX, arbitraryY)); // Hasty clean up for NoSuchElementException when getTree is called later
     }
 
     public Json marshal()
@@ -36,9 +38,9 @@ public class Model {
 
     public void addTree(int mouseX, int mouseY) {
         Tree t = new Tree(Math.floorDiv(mouseX + View.getCurrentRoomX(), // create new tree with x and y,
-                Tree.getW()) * Tree.getW(),
+                getTreeWidth()) * getTreeWidth(),
                 Math.floorDiv(mouseY + View.getCurrentRoomY(),
-                Tree.getH()) * Tree.getH());
+                getTreeHeight()) * getTreeHeight());
         trees.add(t);
     }
 
@@ -66,8 +68,8 @@ public class Model {
     }
 
     public void removeTree(int x, int y) {
-        int TestX = Math.floorDiv(x, Tree.getW()) * Tree.getW(); // creating test coordinates to loop through
-        int TestY = Math.floorDiv(y, Tree.getH()) * Tree.getH(); // to find a match, indicating tree to be removed
+        int TestX = Math.floorDiv(x, getTreeWidth()) * getTreeWidth(); // creating test coordinates to loop through
+        int TestY = Math.floorDiv(y, getTreeHeight()) * getTreeHeight(); // to find a match, indicating tree to be removed
         for (int i = 0; i < trees.size(); i++) {
             if (TestX == trees.get(i).getX() && TestY == trees.get(i).getY()) //noinspection SingleStatementInBlock
             {
@@ -78,18 +80,36 @@ public class Model {
 
     private boolean isColliding(Tree tree)
     {
-        return (Link.getLeftSide() < Tree.getRightSide(tree) &&
-                Link.getRightSide() > Tree.getLeftSide(tree) &&
-                Link.getTop() < Tree.getRoots(tree) &&
-                Link.getRoots() > Tree.getTop(tree));
+        return (link.getLeftSide() < tree.getRightSide(tree) &&
+                link.getRightSide() > tree.getLeftSide(tree) &&
+                link.getTop() < tree.getRoots(tree) &&
+                link.getRoots() > tree.getTop(tree));
     }
 
     public void fixCollision(ArrayList<Tree> trees) {
         for (Tree tree : trees) {
             if (isColliding(tree)) {
-                Link.setCoords(Link.getPx(), Link.getPy());
+                link.setCoords(link.getPx(), link.getPy());
             }
         }
+    }
+    public Link getLink() {
+        return link;
+    }
+
+    public int getTreeHeight()
+    {
+        return trees.getFirst().getHeight(); // allows for access of private variables when no tree is instantiated yet.
+    }
+
+    public int getTreeWidth()
+    {
+        return trees.getFirst().getWidth();
+    }
+
+    public Tree  getTree()
+    {
+        return trees.getFirst(); // allows for drawYourself method to call drawYourself to all trees.
     }
 
     @Override

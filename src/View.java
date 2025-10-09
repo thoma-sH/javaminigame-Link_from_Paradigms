@@ -63,13 +63,13 @@ public class View extends JPanel
 
     public void updateRoomView()
     {
-        if(Link.getX() >= (currentRoomX + Game.getWindowWidth()))
+        if(model.getLink().getX() >= (currentRoomX + Game.getWindowWidth()))
             moveCameraRight();
-        if(Link.getX() <= currentRoomX)
+        if(model.getLink().getX() <= currentRoomX)
             moveCameraLeft();
-        if((Link.getY() + Link.getH()) <= currentRoomY)
+        if((model.getLink().getY() + model.getLink().getH()) <= currentRoomY)
             moveCameraUp();
-        if((Link.getY() + Link.getH()) >= (currentRoomY + Game.getWindowHeight()))
+        if((model.getLink().getY() + model.getLink().getH()) >= (currentRoomY + Game.getWindowHeight()))
             moveCameraDown();
     }
 
@@ -78,8 +78,8 @@ public class View extends JPanel
         updateRoomView();
         g.setColor(new Color(72, 152, 72));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        Tree.drawYourself(g, Model.getTrees()); // ArrayList sprite drawYourself call
-        Link.drawYourself(g); // Unique sprite drawYourself call
+        model.getLink().drawYourself(g); // Unique sprite drawYourself call
+        model.getTree().drawYourself(g, Model.getTrees());
     }
 
     public static int getCurrentRoomX() { return currentRoomX; }
