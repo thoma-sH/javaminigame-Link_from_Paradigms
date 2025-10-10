@@ -80,10 +80,10 @@ public class Model {
 
     private boolean isColliding(Tree tree)
     {
-        return (link.getLeftSide() < tree.getRightSide(tree) &&
-                link.getRightSide() > tree.getLeftSide(tree) &&
-                link.getTop() < tree.getRoots(tree) &&
-                link.getRoots() > tree.getTop(tree));
+        return (link.getLeftSide() < tree.getRightSide() &&
+                link.getRightSide() > tree.getLeftSide() &&
+                link.getTop() < tree.getRoots() &&
+                link.getRoots() > tree.getTop());
     }
 
     public void fixCollision(ArrayList<Tree> trees) {

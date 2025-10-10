@@ -50,19 +50,16 @@ public class Tree {
         return treeCounter != 0;
     }
 
-    public int getRightSide(Tree tree)
+    public int getRightSide()
     {
-        return tree.getX() + this.width;
+        return this.getX() + this.width;
     }
 
-    public int getRoots(Tree tree) { return tree.getY() + this.height; }
+    public int getRoots() { return this.getY() + this.height; }
 
-    public int getLeftSide(Tree tree) { return tree.getX(); }
+    public int getLeftSide() { return this.getX(); }
 
-    public int getTop(Tree tree)
-    {
-        return tree.getY();
-    }
+    public int getTop() { return this.getY(); }
 
     public void drawYourself(Graphics g, ArrayList<Tree> trees)
     {

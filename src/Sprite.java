@@ -33,4 +33,7 @@ abstract class Sprite
         return this.height;
     }
 
+    @Override
+    public abstract String toString();
+
 }
