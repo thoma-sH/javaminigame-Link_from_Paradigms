@@ -22,19 +22,19 @@ public class Tree {
     }
 
     public int getX() {
-        return x;
+        return this.x;
     }
 
     public int getY() {
-        return y;
+        return this.y;
     }
 
     public int getWidth() {
-        return width;
+        return this.width;
     }
 
     public int getHeight() {
-        return height;
+        return this.height;
     }
 
     public boolean treeExists(int mouseX, int mouseY, ArrayList<Tree> trees) // ArrayList sprite exists function
@@ -52,14 +52,14 @@ public class Tree {
 
     public int getRightSide()
     {
-        return this.getX() + this.width;
+        return this.x + this.width;
     }
 
-    public int getRoots() { return this.getY() + this.height; }
+    public int getRoots() { return this.y + this.height; }
 
-    public int getLeftSide() { return this.getX(); }
+    public int getLeftSide() { return this.x; }
 
-    public int getTop() { return this.getY(); }
+    public int getTop() { return this.y; }
 
     public void drawYourself(Graphics g, ArrayList<Tree> trees)
     {
@@ -87,8 +87,8 @@ public class Tree {
     // Unmarshalling constructor
     public Tree(Json ob)
     {
-        x = (int)ob.getLong("x");
-        y = (int)ob.getLong("y");
+        this.x = (int)ob.getLong("x");
+        this.y = (int)ob.getLong("y");
         width = TREE_WIDTH;
         height = TREE_HEIGHT;
 

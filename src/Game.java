@@ -21,7 +21,7 @@ public class Game extends JFrame
         view = new View(controller, model);
         this.addKeyListener(controller);
         view.addMouseListener(controller);
-		this.setTitle("A3 - Link vs The World");
+		this.setTitle("A4 - Polymorphism");
 		this.setSize(700, 500);
 		this.setFocusable(true);
 		this.getContentPane().add(view);
@@ -49,12 +49,12 @@ public class Game extends JFrame
     {
         Json loadObject = Json.load("map.json");
         model.unmarshal(loadObject);
-        System.out.println("load map.json file!");
+        System.out.println("loaded map.json file!");
         do
         {
             keepGoing = controller.update();
             view.repaint();
-            model.fixCollision(Model.getTrees());
+            model.update();
             Toolkit.getDefaultToolkit().sync(); // Updates screen
 
             // Go to sleep for 50 milliseconds

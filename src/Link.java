@@ -12,7 +12,7 @@ public class Link
     private int px = 100, py = 100;
     private int x, y, width, height; // Since we only have one Link, I will make this static for easier access.
     private double speed = 8;
-    public static final int LINK_WIDTH = 40, LINK_HEIGHT = 63;
+    public static final int LINK_WIDTH = 42, LINK_HEIGHT = 65;
     private static BufferedImage[][] linkImages;
     private int currentLinkFrame = 0;
     private int currentLinkDirection = 0;
@@ -60,6 +60,11 @@ public class Link
         return this.py;
     }
 
+    public void setPCoordinate(int x, int y){
+        this.px = x;
+        this.py = y;
+    }
+
     public void setPx(int x) { this.px = x; }
 
     public void setPy(int y) {
@@ -70,14 +75,14 @@ public class Link
 
     public int getY() { return this.y; }
 
-    public int getW() { return width; }
+    public int getW() { return this.width; }
 
-    public int getH() { return height; }
+    public int getH() { return this.height; }
 
-    public void setCoords(int x, int y)
+    public void setCoords(int newX, int newY)
     {
-        this.x = x;
-        this.y = y;
+        x = newX;
+        y = newY;
     }
 
     public int getRightSide()
@@ -113,12 +118,12 @@ public class Link
 
     public void drawYourself(Graphics g)
     {
-        g.drawImage(linkImages[currentLinkDirection][currentLinkFrame], this.getX() - View.getCurrentRoomX(),
-                this.getY() - View.getCurrentRoomY(), width, height, null);
+        g.drawImage(linkImages[currentLinkDirection][currentLinkFrame], x - View.getCurrentRoomX(),
+                y - View.getCurrentRoomY(), width, height, null);
     }
 
     @Override
     public String toString() {
-        return "Link at (" + x + "," + y + ")";
+        return "Link at (" + x + "," + y + ") Link pc: (" + px + "," + py + ")";
     }
 }

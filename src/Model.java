@@ -6,16 +6,17 @@ import java.util.ArrayList;
 
 public class Model {
     private static ArrayList<Tree> trees;
+    private boolean collisionDetected;
     Link link;
 
     public Model()
     {
-        int arbitraryX = 9999;
-        int arbitraryY = 9999;
+        int firstTreeX = 0;
+        int firstTreeY = 0;
         trees = new ArrayList<>();
         link = new Link(100, 100);
-        trees.add(new Tree(arbitraryX, arbitraryY)); // Hasty clean up for NoSuchElementException when getTree is called later
-    }
+        trees.add(new Tree(firstTreeX, firstTreeY)); // Hasty clean up for NoSuchElementException when getTree is called
+    }                                                // on JSON trees.
 
     public Json marshal()
     {
@@ -48,6 +49,12 @@ public class Model {
         trees.clear();
     }
 
+    public void update()
+    {
+        fixLinkCollision();
+        link.setPCoordinate(link.getX(), link.getY());
+    }
+
     public void unmarshal(Json ob)
     {
         trees.clear();
@@ -64,7 +71,7 @@ public class Model {
 
     public void tellLinkToMoveYoBody(String direction)
     {
-        link.moveYoBody(direction);
+        getLink().moveYoBody(direction);
     }
 
     public void removeTree(int x, int y) {
@@ -78,17 +85,17 @@ public class Model {
         }                           // there are 64*80 possible pixels to click on in 1 area, and they all will
     }                            // result in painting the same one tree in the same 64x80 pixel area.
 
-    private boolean isColliding(Tree tree)
+    private boolean isSpriteColliding(/*sprite a, */ Tree tree)
     {
-        return (link.getLeftSide() < tree.getRightSide() &&
-                link.getRightSide() > tree.getLeftSide() &&
-                link.getTop() < tree.getRoots() &&
-                link.getRoots() > tree.getTop());
+        return (getLink().getLeftSide() < tree.getRightSide() &&
+                getLink().getRightSide() > tree.getLeftSide() &&
+                getLink().getTop() < tree.getRoots() &&
+                getLink().getRoots() > tree.getTop());
     }
 
-    public void fixCollision(ArrayList<Tree> trees) {
+    public void fixLinkCollision() {
         for (Tree tree : trees) {
-            if (isColliding(tree)) {
+            if (isSpriteColliding(tree)) {
                 link.setCoords(link.getPx(), link.getPy());
             }
         }
@@ -110,6 +117,10 @@ public class Model {
     public Tree  getTree()
     {
         return trees.getFirst(); // allows for drawYourself method to call drawYourself to all trees.
+    }
+
+    public boolean collisionDetected() {
+        return collisionDetected;
     }
 
     @Override

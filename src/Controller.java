@@ -127,8 +127,6 @@ public class Controller implements ActionListener, MouseListener, KeyListener
 
     public boolean update()
     {
-        model.getLink().setPx(model.getLink().getX());
-        model.getLink().setPy(model.getLink().getY());
 
         if(keyRight)
         {
