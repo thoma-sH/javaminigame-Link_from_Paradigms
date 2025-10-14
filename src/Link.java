@@ -7,10 +7,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-public class Link
+public class Link extends Sprite
 {
-    private int px = 100, py = 100;
-    private int x, y, width, height; // Since we only have one Link, I will make this static for easier access.
+    private int px = 100, py = 100;// Since we only have one Link, I will make this static for easier access.
     private double speed = 8;
     public static final int LINK_WIDTH = 42, LINK_HEIGHT = 65;
     private static BufferedImage[][] linkImages;
@@ -20,10 +19,7 @@ public class Link
 
     public Link(int x, int y)
     {
-        this.x = x;
-        this.y = y;
-        width = LINK_WIDTH;
-        height = LINK_HEIGHT;
+        super(x, y, LINK_WIDTH, LINK_HEIGHT);
         int index = 1;
         linkImages = new BufferedImage[LINK_NUM_DIRECTIONS]
                 [LINK_MAX_IMAGES_PER_DIRECTION];
@@ -71,14 +67,6 @@ public class Link
         this.py = y;
     }
 
-    public int getX() { return this.x; }
-
-    public int getY() { return this.y; }
-
-    public int getW() { return this.width; }
-
-    public int getH() { return this.height; }
-
     public void setCoords(int newX, int newY)
     {
         x = newX;
@@ -87,12 +75,12 @@ public class Link
 
     public int getRightSide()
     {
-        return this.getX() + this.getW();
+        return this.getX() + this.getWidth();
     }
 
     public int getRoots()
     {
-        return this.getY() + this.getH();
+        return this.getY() + this.getHeight();
     }
 
     public int getLeftSide()

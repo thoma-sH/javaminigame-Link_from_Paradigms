@@ -1,9 +1,6 @@
 abstract class Sprite
 {
-    protected int x;
-    protected int y;
-    protected int width;
-    protected int height;
+    protected int x, y, height, width;
 
     public Sprite(int x, int y, int width, int height)
     {

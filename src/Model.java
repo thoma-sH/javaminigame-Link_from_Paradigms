@@ -21,9 +21,9 @@ public class Model {
     public Json marshal()
     {
         Json ob = Json.newObject();
-        Json tmpList = Json.newList();
-        ob.add("trees", tmpList);
-        for (Tree tree : trees) tmpList.add(tree.marshal());
+        Json tmpTreeList = Json.newList();
+        ob.add("trees", tmpTreeList);
+        for (Tree tree : trees) tmpTreeList.add(tree.marshal());
         return ob;
     }
 
@@ -58,9 +58,10 @@ public class Model {
     public void unmarshal(Json ob)
     {
         trees.clear();
-        for(int i = 0; i < ob.get("trees").size(); i++)
+        Json tmpTreeList = ob.get("trees");
+        for(int i = 0; i < tmpTreeList.size(); i++)
         {
-            trees.add(new Tree(ob.get("trees").get(i)));
+            trees.add(new Tree(tmpTreeList.get(i)));
         }
 
     }

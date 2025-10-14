@@ -67,9 +67,9 @@ public class View extends JPanel
             moveCameraRight();
         if(model.getLink().getX() <= currentRoomX)
             moveCameraLeft();
-        if((model.getLink().getY() + model.getLink().getH()) <= currentRoomY)
+        if((model.getLink().getY() + model.getLink().getHeight()) <= currentRoomY)
             moveCameraUp();
-        if((model.getLink().getY() + model.getLink().getH()) >= (currentRoomY + Game.getWindowHeight()))
+        if((model.getLink().getY() + model.getLink().getHeight()) >= (currentRoomY + Game.getWindowHeight()))
             moveCameraDown();
     }
 

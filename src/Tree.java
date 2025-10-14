@@ -6,35 +6,23 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
 
-public class Tree {
+public class Tree extends Sprite{
     private static BufferedImage treeImage;
-    private int x, y, width, height;
     public static final int TREE_WIDTH = 64, TREE_HEIGHT = 80;
 
     public Tree(int x, int y) {
-        this.x = x;
-        this.y = y;
-        width = TREE_WIDTH;
-        height = TREE_HEIGHT;
+        super(x, y, TREE_WIDTH, TREE_HEIGHT);
         if (treeImage == null) {
             treeImage = View.loadImage("images/tree3.png");
         }
     }
 
-    public int getX() {
-        return this.x;
-    }
+    public Tree(Json ob)
+    {
+        super((int)ob.getLong("x"), (int)ob.getLong("y"), TREE_WIDTH, TREE_HEIGHT);
 
-    public int getY() {
-        return this.y;
-    }
-
-    public int getWidth() {
-        return this.width;
-    }
-
-    public int getHeight() {
-        return this.height;
+        if(treeImage == null)
+            treeImage = View.loadImage("images/tree3.png");
     }
 
     public boolean treeExists(int mouseX, int mouseY, ArrayList<Tree> trees) // ArrayList sprite exists function
@@ -85,16 +73,6 @@ public class Tree {
     }
 
     // Unmarshalling constructor
-    public Tree(Json ob)
-    {
-        this.x = (int)ob.getLong("x");
-        this.y = (int)ob.getLong("y");
-        width = TREE_WIDTH;
-        height = TREE_HEIGHT;
-
-        if(treeImage == null)
-            treeImage = View.loadImage("images/tree3.png");
-    }
 
     @Override
     public String toString() {
