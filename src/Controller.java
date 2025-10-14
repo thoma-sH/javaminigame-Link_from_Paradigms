@@ -3,6 +3,7 @@
 // Assignment 3 - Collision detection and debugging
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Iterator;
 
 
 public class Controller implements ActionListener, MouseListener, KeyListener
@@ -32,19 +33,25 @@ public class Controller implements ActionListener, MouseListener, KeyListener
     }
 
     public void mousePressed(MouseEvent e) {
-        if (editMode && addMapItem) {
-            if (!model.getTree().treeExists(e.getX() + View.getCurrentRoomX(), // check if a tree exists at the
-                    e.getY()+View.getCurrentRoomY(), Model.getTrees())) {                     // specified spot
-                model.addTree(e.getX(), e.getY());// if not, add a tree to our arraylist and
-            }
-        }
-        if(editMode && !addMapItem && model.getTree().treeExists(e.getX() + View.getCurrentRoomX(),
-                e.getY() + View.getCurrentRoomY(), Model.getTrees()))
-        {
-            model.removeTree(e.getX() + View.getCurrentRoomX(), e.getY() + View.getCurrentRoomY()); // removes tree where mouse clicks.
-        }
 
+        int treeCounter = 0;
+        if (editMode && addMapItem) {
+            for (Iterator<Tree> it = Model.getTrees().iterator(); it.hasNext(); ) {
+                Tree currentTree = it.next();
+                if (currentTree.treeExists(e.getX() + View.getCurrentRoomX(),
+                        e.getY() + View.getCurrentRoomY())) {
+                    treeCounter++;
+                }
+            }
+            if (treeCounter == 0)
+                model.addTree(e.getX(), e.getY());
+        }
+        if (editMode && !addMapItem) {
+            model.removeTree(e.getX() + View.getCurrentRoomX(), e.getY() + View.getCurrentRoomY());
+        }
     }
+
+
 
     public void mouseReleased(MouseEvent e) {    }
     public void mouseEntered(MouseEvent e) {    }

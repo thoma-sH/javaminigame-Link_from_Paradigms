@@ -25,17 +25,10 @@ public class Tree extends Sprite{
             treeImage = View.loadImage("images/tree3.png");
     }
 
-    public boolean treeExists(int mouseX, int mouseY, ArrayList<Tree> trees) // ArrayList sprite exists function
+    public boolean treeExists(int mouseX, int mouseY) // ArrayList sprite exists function
     {
-        int treeCounter = 0;
-        for (int i = trees.size() - 1; i >= 0; i--) { // sprite.size()
-            Tree currentTree = trees.get(i);
-            if (currentTree.getX() == Math.floorDiv(mouseX, currentTree.width) * currentTree.width &&
-                    currentTree.getY() == Math.floorDiv(mouseY, currentTree.height) * currentTree.height) // sprite.getW(), sprite.getH()
-                treeCounter++; // spriteCounter++
-        }
-
-        return treeCounter != 0;
+        return mouseX >= x && mouseX <= x + width &&
+                mouseY >= y && mouseY <= y + height;
     }
 
     public int getRightSide()
