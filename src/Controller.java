@@ -36,10 +36,10 @@ public class Controller implements ActionListener, MouseListener, KeyListener
 
         int treeCounter = 0;
         if (editMode && addMapItem) {
-            for (Iterator<Tree> it = Model.getTrees().iterator(); it.hasNext(); ) {
-                Tree currentTree = it.next();
-                if (currentTree.treeExists(e.getX() + View.getCurrentRoomX(),
-                        e.getY() + View.getCurrentRoomY())) {
+            for (Iterator<Sprite> it = model.getSprites().iterator(); it.hasNext(); ) {
+                Sprite currentSprite = it.next();
+                if (currentSprite.amIClickingOnYou(e.getX(),
+                        e.getY())) {
                     treeCounter++;
                 }
             }
@@ -47,7 +47,13 @@ public class Controller implements ActionListener, MouseListener, KeyListener
                 model.addTree(e.getX(), e.getY());
         }
         if (editMode && !addMapItem) {
-            model.removeTree(e.getX() + View.getCurrentRoomX(), e.getY() + View.getCurrentRoomY());
+            for(Iterator<Sprite> it = model.getSprites().iterator(); it.hasNext(); ) {
+                Sprite currentSprite = it.next();
+                if(currentSprite.amIClickingOnYou(e.getX() + View.getCurrentRoomX(),
+                        e.getY() + View.getCurrentRoomY())) {
+                    model.removeTree(currentSprite);
+                }
+            }
         }
     }
 
@@ -74,7 +80,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener
                 break;
             case KeyEvent.VK_C:
                 if(editMode)
-                    model.clearTrees();
+                    model.clearSprites();
                 break;
             case KeyEvent.VK_RIGHT:
                 keyRight = true;

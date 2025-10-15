@@ -73,26 +73,6 @@ public class Link extends Sprite
         y = newY;
     }
 
-    public int getRightSide()
-    {
-        return this.getX() + this.getWidth();
-    }
-
-    public int getRoots()
-    {
-        return this.getY() + this.getHeight();
-    }
-
-    public int getLeftSide()
-    {
-        return this.getX();
-    }
-
-    public int getTop()
-    {
-        return this.getY();
-    }
-
     public void setCurrentLinkDirection(int newLinkDirection)
     {
         currentLinkDirection = newLinkDirection;
@@ -112,6 +92,7 @@ public class Link extends Sprite
 
     @Override
     public String toString() {
-        return "Link at (" + x + "," + y + ") Link pc: (" + px + "," + py + ")";
+        return "Link at (" + x + "," + y + ") Link pc: (" + px + "," + py + ")" +
+                " Width: " + width + ", Height: " + height;
     }
 }

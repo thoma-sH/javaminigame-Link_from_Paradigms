@@ -78,8 +78,10 @@ public class View extends JPanel
         updateRoomView();
         g.setColor(new Color(72, 152, 72));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        model.getLink().drawYourself(g); // Unique sprite drawYourself call
-        model.getTree().drawYourself(g, Model.getTrees());
+        for(int i = 0; i < model.getSprites().size(); i++){
+            Sprite t = model.getSprites().get(i);
+            t.drawYourself(g);
+        }
     }
 
     public static int getCurrentRoomX() { return currentRoomX; }
