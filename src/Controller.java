@@ -84,6 +84,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener
             case KeyEvent.VK_E:
                 editMode = !editMode;
                 addMapItem = true;
+                model.setItemNum(0);
                 break;
             case KeyEvent.VK_R:
                 addMapItem = false;
