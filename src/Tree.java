@@ -10,6 +10,7 @@ public class Tree extends Sprite{
 
     public Tree(int x, int y) {
         super(x, y, TREE_WIDTH, TREE_HEIGHT);
+        valid = true;
         if (treeImage == null) {
             treeImage = View.loadImage("images/tree3.png");
         }
@@ -21,6 +22,10 @@ public class Tree extends Sprite{
 
         if(treeImage == null)
             treeImage = View.loadImage("images/tree3.png");
+    }
+
+    public boolean isTree() {
+        return true;
     }
 
     public Json marshal()
@@ -38,23 +43,17 @@ public class Tree extends Sprite{
     {
         g.drawImage(treeImage, x - View.getCurrentRoomX(),
                 y - View.getCurrentRoomY(), TREE_WIDTH, TREE_HEIGHT, null);
-
-        if(Controller.isEditMode() && Controller.isAddMapItem())
-        {
-            g.setColor(Color.GREEN);
-            g.fillRect(0, 0, 100, 100);
-            g.drawImage(treeImage, 18, 10,  TREE_WIDTH, TREE_HEIGHT, null);
-        }
-
-        if(Controller.isEditMode() && !Controller.isAddMapItem())
-        {
-            g.setColor(Color.RED);
-            g.fillRect(0, 0, 100, 100);
-            g.drawImage(treeImage, 18, 10, TREE_WIDTH, TREE_HEIGHT, null);
-        }
     }
 
-    // Unmarshalling constructor
+    public static BufferedImage getTreeImage()
+    {
+        return treeImage;
+    }
+
+    @Override
+    public boolean update() {
+        return true;
+    }
 
     @Override
     public String toString() {

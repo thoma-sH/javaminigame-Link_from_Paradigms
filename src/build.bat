@@ -1,5 +1,5 @@
 ::@echo off
-javac Game.java View.java Controller.java Model.java Tree.java Json.java Link.java
+javac Game.java View.java Controller.java Model.java Tree.java Json.java Link.java TreasureChest.java
 if %errorlevel% neq 0 (
 	echo There was an error; exiting now.	
 ) else (

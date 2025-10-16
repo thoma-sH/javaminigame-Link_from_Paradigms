@@ -2,7 +2,9 @@ import java.awt.*;
 
 public abstract class Sprite
 {
-    protected int x, y, height, width;
+    protected int x, y, width, height;
+    protected boolean valid;
+    protected int framesSinceOpen;
 
     public Sprite(int x, int y, int width, int height)
     {
@@ -30,6 +32,26 @@ public abstract class Sprite
     public int getHeight()
     {
         return this.height;
+    }
+
+    public void  setX(int x)
+    {
+        this.x = x;
+    }
+
+    public void  setY(int y)
+    {
+        this.y = y;
+    }
+
+    public void  setWidth(int width)
+    {
+        this.width = width;
+    }
+
+    public void  setHeight(int height)
+    {
+        this.height = height;
     }
 
     public int getRightSide()
@@ -62,13 +84,22 @@ public abstract class Sprite
         return false;
     }
 
+    public boolean isTreasureChest()
+    {
+        return false;
+    }
+
+    public int getFramesSinceOpen() {
+        return framesSinceOpen;
+    }
+
     public boolean amIClickingOnYou(int mouseX, int mouseY) // ArrayList sprite exists function
     {
         return mouseX >= x && mouseX <= x + width &&
                 mouseY >= y && mouseY <= y + height;
     }
 
-    public boolean isSpriteColliding(Sprite a, Sprite b)
+    public static boolean isSpriteColliding(Sprite a, Sprite b)
     {
         return (a.getLeftSide() < b.getRightSide() &&
                 a.getRightSide() > b.getLeftSide() &&
@@ -76,7 +107,11 @@ public abstract class Sprite
                 a.getRoots() > b.getTop());
     }
 
+    public abstract boolean update();
+
     public abstract void drawYourself(Graphics g);
+
+    public abstract Json marshal();
 
     @Override
     public abstract String toString();

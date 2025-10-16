@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.Color;
+import java.util.Iterator;
 
 public class View extends JPanel
 {
@@ -67,7 +68,7 @@ public class View extends JPanel
             moveCameraRight();
         if(model.getLink().getX() <= currentRoomX)
             moveCameraLeft();
-        if((model.getLink().getY() + model.getLink().getHeight()) <= currentRoomY)
+        if((model.getLink().getY() + model.getLink().getHeight()) < currentRoomY)
             moveCameraUp();
         if((model.getLink().getY() + model.getLink().getHeight()) >= (currentRoomY + Game.getWindowHeight()))
             moveCameraDown();
@@ -78,9 +79,26 @@ public class View extends JPanel
         updateRoomView();
         g.setColor(new Color(72, 152, 72));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        for(int i = 0; i < model.getSprites().size(); i++){
-            Sprite t = model.getSprites().get(i);
-            t.drawYourself(g);
+        for(Iterator<Sprite> it = Model.getSprites().iterator(); it.hasNext();){
+            Sprite s = it.next();
+            s.drawYourself(g);
+            s.update();
+        }
+
+        if(Controller.isEditMode() && Controller.isAddMapItem())
+        {
+            g.setColor(Color.GREEN);
+            g.fillRect(0, 0, 100, 100);
+        }
+
+        if(Controller.isEditMode() && !Controller.isAddMapItem())
+        {
+            g.setColor(Color.RED);
+            g.fillRect(0, 0, 100, 100);
+        }
+        if(Controller.isEditMode())
+        {
+            Model.getItemsICanAdd().get(model.getItemNum() % 2).drawYourself(g);
         }
     }
 

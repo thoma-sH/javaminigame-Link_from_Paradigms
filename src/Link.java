@@ -20,6 +20,7 @@ public class Link extends Sprite
     public Link(int x, int y)
     {
         super(x, y, LINK_WIDTH, LINK_HEIGHT);
+        valid = true;
         int index = 1;
         linkImages = new BufferedImage[LINK_NUM_DIRECTIONS]
                 [LINK_MAX_IMAGES_PER_DIRECTION];
@@ -30,6 +31,11 @@ public class Link extends Sprite
                             (index++) + ".png");
                 }
             }
+    }
+
+    @Override
+    public boolean isLink() {
+        return true;
     }
 
     public void moveYoBody(String direction)
@@ -78,16 +84,30 @@ public class Link extends Sprite
         currentLinkDirection = newLinkDirection;
     }
 
-    public void updateLinkAnimationSequenceFrame()
-    {
-        if(++currentLinkFrame >= LINK_MAX_IMAGES_PER_DIRECTION)
-            currentLinkFrame = 0;
-    }
-
     public void drawYourself(Graphics g)
     {
         g.drawImage(linkImages[currentLinkDirection][currentLinkFrame], x - View.getCurrentRoomX(),
                 y - View.getCurrentRoomY(), width, height, null);
+    }
+
+    public Json marshal()
+    {
+        Json ob = Json.newObject();
+        ob.add("x", x);
+        ob.add("y", y);
+        ob.add("w", width);
+        ob.add("h", height);
+
+        return ob;
+    }
+
+    public void updateCurrentLinkFrame(){
+        if(++currentLinkFrame >= LINK_MAX_IMAGES_PER_DIRECTION)
+            currentLinkFrame = 0;
+    }
+    @Override
+    public boolean update() {
+        return true;
     }
 
     @Override
