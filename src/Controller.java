@@ -16,7 +16,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener
     private final Model model;
     private static boolean editMode;
     private static boolean addMapItem;
-    private static final int RIGHT_ENUM = 2, LEFT_ENUM = 1, UP_ENUM = 3, DOWN_ENUM = 0;
+    public static final int RIGHT_ENUM = 2, LEFT_ENUM = 1, UP_ENUM = 3, DOWN_ENUM = 0;
 
 	public Controller(Model m)
 	{
@@ -35,7 +35,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener
     public void mousePressed(MouseEvent e) {
         int spriteCounter = 0;
         if(editMode && (e.getX() >= 0 && e.getX() <= 100 &&  e.getY() >= 0 && e.getY() <= 100)){
-            model.setItemNum(model.getItemNum() + 1);
+           view.incrementItemEnum();
         }
         if (editMode && addMapItem &&
                 !(e.getX() >= 0 && e.getX() <= 100 &&  e.getY() >= 0 && e.getY() <= 100)) {
@@ -46,14 +46,14 @@ public class Controller implements ActionListener, MouseListener, KeyListener
                     spriteCounter++;
                 }
             }
-            if(spriteCounter == 0 && model.getItemNum() % 2 == 0){
+            if(spriteCounter == 0 && view.getItemEnum() == 0){
                 model.addTree(Math.floorDiv(e.getX()+ View.getCurrentRoomX(), // create new tree with x and y,
                                 Tree.TREE_WIDTH) * Tree.TREE_WIDTH,                                    // according to current coordinates.
                         Math.floorDiv(e.getY()+View.getCurrentRoomY(),
                                 Tree.TREE_HEIGHT) * Tree.TREE_HEIGHT);
             }
-            if(spriteCounter == 0 && model.getItemNum() % 2 == 1){
-                model.addTreasureChest(e.getX() + View.getCurrentRoomX(),
+            if(spriteCounter == 0 && view.getItemEnum() == 1){
+                model.addTreasureChest(e.getX() + View.getCurrentRoomX(), // create new chest
                         e.getY() + View.getCurrentRoomY());
             }
         }
@@ -62,9 +62,15 @@ public class Controller implements ActionListener, MouseListener, KeyListener
                 !(e.getX() >= 0 && e.getX() <= 100 &&  e.getY() >= 0 && e.getY() <= 100)) {
             for(int i = 0; i < Model.getSprites().size(); i++) {
                 Sprite currentSprite = Model.getSprites().get(i);
-                if(currentSprite.amIClickingOnYou(e.getX() + View.getCurrentRoomX(),
+                if(view.getItemEnum() == 0 && currentSprite.isTree() &&
+                        currentSprite.amIClickingOnYou(e.getX() + View.getCurrentRoomX(),
                         e.getY() + View.getCurrentRoomY())) {
                     model.removeTree(currentSprite);
+                }
+                if(view.getItemEnum() == 1 && currentSprite.isTreasureChest() &&
+                        currentSprite.amIClickingOnYou(e.getX() + View.getCurrentRoomX(),
+                        e.getY() + View.getCurrentRoomY())) {
+                    model.removeTreasureChest(currentSprite);
                 }
             }
         }
@@ -84,7 +90,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener
             case KeyEvent.VK_E:
                 editMode = !editMode;
                 addMapItem = true;
-                model.setItemNum(0);
+                view.resetItemEnum();
                 break;
             case KeyEvent.VK_R:
                 addMapItem = false;
@@ -95,7 +101,6 @@ public class Controller implements ActionListener, MouseListener, KeyListener
             case KeyEvent.VK_C:
                 if(editMode) {
                     model.clearSprites();
-
                 }
                 break;
             case KeyEvent.VK_RIGHT:
@@ -129,6 +134,10 @@ public class Controller implements ActionListener, MouseListener, KeyListener
             case KeyEvent.VK_DOWN:
                 keyDown = false;
                 break;
+            case KeyEvent.VK_SPACE:
+                model.addBoomerang(model.getLink().getX(), model.getLink().getY(),
+                        model.getLink().getCurrentLinkDirection());
+                break;
             case KeyEvent.VK_ESCAPE, KeyEvent.VK_Q:
                 System.exit(0);
         }
@@ -156,6 +165,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener
 
     public boolean update()
     {
+        model.getLink().setPCoordinate(model.getLink().getX(), model.getLink().getY());
         System.out.println(Model.getSprites().size());
         if(keyRight)
         {

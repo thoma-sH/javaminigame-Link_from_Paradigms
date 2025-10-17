@@ -7,12 +7,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.awt.Color;
-import java.util.Iterator;
 
 public class View extends JPanel
 {
     private final Model model;
     private static int currentRoomX, currentRoomY;
+    private int itemEnum;
 
     public View(Controller c, Model m)
 	{
@@ -79,10 +79,8 @@ public class View extends JPanel
         updateRoomView();
         g.setColor(new Color(72, 152, 72));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        for(Iterator<Sprite> it = Model.getSprites().iterator(); it.hasNext();){
-            Sprite s = it.next();
-            s.drawYourself(g);
-            s.update();
+        for(int i = 0; i < Model.getSprites().size(); i++){
+            Model.getSprites().get(i).drawYourself(g, currentRoomX, currentRoomY);
         }
 
         if(Controller.isEditMode() && Controller.isAddMapItem())
@@ -98,13 +96,41 @@ public class View extends JPanel
         }
         if(Controller.isEditMode())
         {
-            Model.getItemsICanAdd().get(model.getItemNum() % 2).drawYourself(g);
+            if(getItemEnum() == 0){
+                Tree t = new Tree(currentRoomX, currentRoomY);
+                t.setX(currentRoomX + 18);
+                t.setY(currentRoomY + 10);
+                t.setWidth(20);
+                t.setHeight(20);
+                t.drawYourself(g, currentRoomX, currentRoomY);
+            }
+            if(getItemEnum() == 1){
+                TreasureChest  tc = new TreasureChest(currentRoomX, currentRoomY);
+                tc.setX(currentRoomX + 18);
+                tc.setY(currentRoomY + 20);
+                tc.drawYourself(g, currentRoomX, currentRoomY);
+            }
         }
     }
 
     public static int getCurrentRoomX() { return currentRoomX; }
 
     public static int getCurrentRoomY() { return currentRoomY; }
+
+    public int getItemEnum() {
+        return itemEnum % 2;
+    }
+
+    public void incrementItemEnum()
+    {
+        itemEnum++;
+    }
+
+    public void resetItemEnum()
+    {
+        itemEnum = 0;
+    }
+
 
     @Override
     public String toString()

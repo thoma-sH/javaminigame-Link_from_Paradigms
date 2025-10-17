@@ -3,24 +3,21 @@
 // Assignment 3 - Collision detection and debugging
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Model {
-    private static ArrayList<Sprite> sprites;
     private Link link;
-    private Sprite treasureChest;
-    private Sprite tree;
-    private static ArrayList<Sprite> itemsICanAdd;
+    private static ArrayList<Sprite> sprites;
+    private static ArrayList<Sprite> toAdd;
+    private static ArrayList<Sprite> toRemove;
     private int itemNum;
 
     public Model()
     {
         sprites = new ArrayList<Sprite>();
-        itemsICanAdd = new ArrayList<Sprite>();
+        toAdd = new ArrayList<Sprite>();
+        toRemove = new ArrayList<Sprite>();
         link = new Link(100, 100);
-        treasureChest = new TreasureChest(View.getCurrentRoomX(), View.getCurrentRoomY());
-        tree = new Tree(View.getCurrentRoomX(), View.getCurrentRoomY());
-        itemsICanAdd.add(tree);
-        itemsICanAdd.add(treasureChest);
 
     }
 
@@ -28,11 +25,16 @@ public class Model {
     {
         Json ob = Json.newObject();
         Json tmpTreeList = Json.newList();
+        Json tmpTreasureChestList = Json.newList();
         ob.add("trees", tmpTreeList);
-
-        for(int i = 0; i < sprites.size(); i++){
-            if(sprites.get(i).isTree()){
-                tmpTreeList.add(((Tree)sprites.get(i)).marshal());
+        ob.add("treasureChests", tmpTreasureChestList);
+        for(Iterator<Sprite> it = sprites.iterator();  it.hasNext();){
+            Sprite sprite = it.next();
+            if(sprite.isTree()){
+                tmpTreeList.add( sprite.marshal() );
+            }
+            if(sprite.isTreasureChest()){
+                tmpTreasureChestList.add( sprite.marshal() );
             }
         }
         return ob;
@@ -40,24 +42,35 @@ public class Model {
 
     public Model(Json ob)
     {
-        sprites = new ArrayList<>();
-        Json tmpList = ob.get("sprites");
-        for(int i = 0; i < tmpList.size(); i++)
+        toAdd = new ArrayList<Sprite>();
+        Json tmpTreeList = ob.get("trees");
+        Json tmpTreasureChestList = tmpTreeList.get("treasureChests");
+        for(int i = 0; i < tmpTreeList.size(); i++)
             {
-            sprites.add(new Tree(tmpList.get(i)));
+                toAdd.add(new Tree(tmpTreeList.get(i)));
+            }
+        for(int i = 0; i < tmpTreasureChestList.size(); i++)
+            {
+                toAdd.add(new TreasureChest(tmpTreasureChestList.get(i)));
             }
     }
 
     public void addTree(int x, int y)
     {
         Sprite t = new Tree(x, y);
-        sprites.add(t);
+        toAdd.add(t);
+    }
+
+    public void addBoomerang(int x, int y, int dirEnum)
+    {
+        Sprite b = new Boomerang(x, y, dirEnum);
+        toAdd.add(b);
     }
 
     public void addTreasureChest(int x, int y)
     {
         Sprite c = new TreasureChest(x, y);
-        sprites.add(c);
+        toAdd.add(c);
     }
 
     public void clearSprites() {
@@ -67,21 +80,46 @@ public class Model {
 
     public void update()
     {
-        itemsICanAdd.get(itemNum % 2).setX(View.getCurrentRoomX());
-        itemsICanAdd.get(itemNum % 2).setY(View.getCurrentRoomY());
-        fixCollision();
-        link.setPCoordinate(link.getX(), link.getY());
+        Iterator<Sprite> iter1 = sprites.iterator();
+        while(iter1.hasNext())
+        {
+            Sprite s1 = iter1.next();
+            if(!s1.update())
+                {
+                toRemove.add(s1);
+                continue;
+                }
+            for (Sprite s2 : sprites) {
+                if (s1 == s2)
+                    continue;
+                if ((Sprite.isSpriteColliding(s1, s2))) {
+                    s2.fixCollision(s1);
+                    s1.fixCollision(s2);
+                }
+
+            }
+        }
+        sprites.addAll(toAdd);
+        toAdd.clear();
+        sprites.removeAll(toRemove);
+        toRemove.clear();
     }
 
     public void unmarshal(Json ob)
     {
         sprites.clear();
+        toRemove.clear();
+        toAdd.clear();
         sprites.add(link);
-        sprites.add(treasureChest);
         Json tmpTreeList = ob.get("trees");
+        Json tmpTreasureChestList = ob.get("treasureChests");
         for(int i = 0; i < tmpTreeList.size(); i++)
         {
             sprites.add(new Tree(tmpTreeList.get(i)));
+        }
+        for(int i = 0; i < tmpTreasureChestList.size(); i++)
+        {
+            sprites.add(new TreasureChest(tmpTreasureChestList.get(i)));
         }
 
     }
@@ -90,8 +128,8 @@ public class Model {
         return sprites;
     }
 
-    public static ArrayList<Sprite> getItemsICanAdd() {
-        return itemsICanAdd;
+    public static ArrayList<Sprite> getToAdd() {
+        return toAdd;
     }
 
     public void tellLinkToMoveYoBody(String direction)
@@ -100,30 +138,11 @@ public class Model {
     }
 
     public void removeTree(Sprite sprite) {
-        sprites.remove(sprite);
+        toRemove.add(sprite);
     }
 
-    public void fixCollision() {
-        for (int i = 0; i < sprites.size(); i++) {
-            Sprite currentSprite = sprites.get(i);
-            if (currentSprite.isTree() && Sprite.isSpriteColliding(link, currentSprite)) {
-                link.setCoords(link.getPx(), link.getPy());
-            }
-            if (currentSprite.isTreasureChest() && Sprite.isSpriteColliding(link, currentSprite)) {
-                currentSprite.valid = false;
-                currentSprite.setWidth(TreasureChest.RUPEE_WIDTH);
-                currentSprite.setHeight(TreasureChest.RUPEE_HEIGHT);
-                currentSprite.setX(currentSprite.getX());
-                currentSprite.setY(currentSprite.getY());
-                if (Sprite.isSpriteColliding(link, currentSprite) &&
-                        currentSprite.getFramesSinceOpen() < TreasureChest.RESUME_DURATION) {
-                    link.setCoords(link.getPx(), link.getPy());
-                }
-                if (Sprite.isSpriteColliding(link, currentSprite)) {
-                    sprites.remove(currentSprite);
-                }
-            }
-        }
+    public void removeTreasureChest(Sprite sprite) {
+        toRemove.add(sprite);
     }
 
     public int getItemNum() {

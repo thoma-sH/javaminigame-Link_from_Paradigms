@@ -84,10 +84,15 @@ public class Link extends Sprite
         currentLinkDirection = newLinkDirection;
     }
 
-    public void drawYourself(Graphics g)
+    public int getCurrentLinkDirection()
     {
-        g.drawImage(linkImages[currentLinkDirection][currentLinkFrame], x - View.getCurrentRoomX(),
-                y - View.getCurrentRoomY(), width, height, null);
+        return currentLinkDirection;
+    }
+
+    public void drawYourself(Graphics g, int scrollX, int scrollY)
+    {
+        g.drawImage(linkImages[currentLinkDirection][currentLinkFrame], x - scrollX,
+                y - scrollY, width, height, null);
     }
 
     public Json marshal()
@@ -101,11 +106,41 @@ public class Link extends Sprite
         return ob;
     }
 
+    public void getOutOfTree(Tree t){
+        if(getRightSide() >=  t.getLeftSide() && (px + LINK_WIDTH) <= t.getX()){
+            x = t.getX() - LINK_WIDTH - 1;
+        }
+        if(getLeftSide()<= t.getRightSide() && (px >= (t.getX() + t.getWidth()))){
+            x = t.getX() + t.getWidth() + 1;
+        }
+        if(getTop() <= t.getRoots() && (py >= t.getRoots())){
+            y = t.getY() + t.getHeight() + 1;
+        }
+        if(getRoots() >= t.getTop() && (py + LINK_HEIGHT) <= t.getY()){
+            y = t.getY() - getHeight() - 1;
+        }
+    }
+
+    @Override
+    public void fixCollision(Sprite b)
+    {
+        if(b.isTree())
+        {
+            getOutOfTree( ((Tree)b) );
+        }
+        if(b.isTreasureChest())
+        {
+            if(((TreasureChest)b).getFramesSinceOpen() < TreasureChest.RESUME_DURATION)
+                setCoords(px, py);
+        }
+    }
+
     public void updateCurrentLinkFrame(){
         if(++currentLinkFrame >= LINK_MAX_IMAGES_PER_DIRECTION)
             currentLinkFrame = 0;
     }
-    @Override
+
+
     public boolean update() {
         return true;
     }

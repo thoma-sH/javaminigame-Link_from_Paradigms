@@ -28,6 +28,11 @@ public class Tree extends Sprite{
         return true;
     }
 
+    @Override
+    public void fixCollision(Sprite b) {
+
+    }
+
     public Json marshal()
     {
         Json ob = Json.newObject();
@@ -39,10 +44,10 @@ public class Tree extends Sprite{
         return ob;
     }
 
-    public void drawYourself(Graphics g)
+    public void drawYourself(Graphics g, int scrollX, int scrollY)
     {
-        g.drawImage(treeImage, x - View.getCurrentRoomX(),
-                y - View.getCurrentRoomY(), TREE_WIDTH, TREE_HEIGHT, null);
+        g.drawImage(treeImage, x - scrollX,
+                y - scrollY, TREE_WIDTH, TREE_HEIGHT, null);
     }
 
     public static BufferedImage getTreeImage()

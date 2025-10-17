@@ -3,8 +3,7 @@ import java.awt.*;
 public abstract class Sprite
 {
     protected int x, y, width, height;
-    protected boolean valid;
-    protected int framesSinceOpen;
+    protected boolean valid = true;
 
     public Sprite(int x, int y, int width, int height)
     {
@@ -89,8 +88,9 @@ public abstract class Sprite
         return false;
     }
 
-    public int getFramesSinceOpen() {
-        return framesSinceOpen;
+    public boolean isBoomerang()
+    {
+        return false;
     }
 
     public boolean amIClickingOnYou(int mouseX, int mouseY) // ArrayList sprite exists function
@@ -107,9 +107,11 @@ public abstract class Sprite
                 a.getRoots() > b.getTop());
     }
 
+    public abstract void fixCollision(Sprite b);
+
     public abstract boolean update();
 
-    public abstract void drawYourself(Graphics g);
+    public abstract void drawYourself(Graphics g, int scrollX, int scrollY);
 
     public abstract Json marshal();
 
