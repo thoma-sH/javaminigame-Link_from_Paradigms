@@ -24,9 +24,13 @@ public class Link extends Sprite
         int index = 1;
         linkImages = new BufferedImage[LINK_NUM_DIRECTIONS]
                 [LINK_MAX_IMAGES_PER_DIRECTION];
+
         for(int i = 0; i < LINK_NUM_DIRECTIONS; i++)
-            for(int j = 0; j < LINK_MAX_IMAGES_PER_DIRECTION; j++) {
-                if(linkImages[i][j] == null){
+
+            for(int j = 0; j < LINK_MAX_IMAGES_PER_DIRECTION; j++)
+            {
+                if(linkImages[i][j] == null)
+                {
                     linkImages[i][j] = View.loadImage("images/link" +
                             (index++) + ".png");
                 }
@@ -40,17 +44,21 @@ public class Link extends Sprite
 
     public void moveYoBody(String direction)
     {
-        if(Objects.equals(direction, "left")) {
+        if(Objects.equals(direction, "left"))
+        {
             x -= (int) speed;
         }
-        if(Objects.equals(direction, "right")) {
+        if(Objects.equals(direction, "right"))
+        {
             x += (int) speed;
         }
-        if(Objects.equals(direction, "up")) {
+        if(Objects.equals(direction, "up"))
+        {
             System.out.println(this);
             y -= (int) speed;
         }
-        if(Objects.equals(direction, "down")) {
+        if(Objects.equals(direction, "down"))
+        {
             y += (int) speed;
         }
 
@@ -62,7 +70,8 @@ public class Link extends Sprite
         return this.py;
     }
 
-    public void setPCoordinate(int x, int y){
+    public void setPCoordinate(int x, int y)
+    {
         this.px = x;
         this.py = y;
     }
@@ -106,7 +115,8 @@ public class Link extends Sprite
         return ob;
     }
 
-    public void getOutOfTree(Tree t){
+    public void getOutOfTree(Tree t)
+    {
         if(getRightSide() >=  t.getLeftSide() && (px + LINK_WIDTH) <= t.getX()){
             x = t.getX() - LINK_WIDTH - 1;
         }
@@ -135,7 +145,8 @@ public class Link extends Sprite
         }
     }
 
-    public void updateCurrentLinkFrame(){
+    public void updateCurrentLinkFrame()
+    {
         if(++currentLinkFrame >= LINK_MAX_IMAGES_PER_DIRECTION)
             currentLinkFrame = 0;
     }
@@ -146,7 +157,8 @@ public class Link extends Sprite
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Link at (" + x + "," + y + ") Link pc: (" + px + "," + py + ")" +
                 " Width: " + width + ", Height: " + height;
     }

@@ -6,13 +6,13 @@ import java.awt.Toolkit;
 
 public class Game extends JFrame
 {
-    private final Model model;
-    private final View view;
-    private final Controller controller;
     private boolean keepGoing;
+    private Model model;
+    private View view;
+    private Controller controller;
+    public final static int WINDOW_WIDTH = 700;
+    public final static int WINDOW_HEIGHT = 500;
 
-    private final static int windowWidth = 700;
-    private final static int windowHeight = 500;
 	public Game()
 	{
         keepGoing = true;
@@ -35,15 +35,11 @@ public class Game extends JFrame
         g.run();
 	}
 
-    public static int getWindowWidth() { return windowWidth; }
-
-    public static int getWindowHeight() { return windowHeight; }
-
     @Override
     public String toString()
     {
         return "Game state: " + keepGoing + ", Game window width and height: "
-                + getWindowWidth() + ", " + getWindowHeight();
+                + WINDOW_WIDTH + ", " + WINDOW_HEIGHT;
     }
     public void run()
     {

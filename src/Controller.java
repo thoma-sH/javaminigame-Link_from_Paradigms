@@ -32,44 +32,59 @@ public class Controller implements ActionListener, MouseListener, KeyListener
         view = v;
     }
 
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(MouseEvent e)
+    {
         int spriteCounter = 0;
-        if(editMode && (e.getX() >= 0 && e.getX() <= 100 &&  e.getY() >= 0 && e.getY() <= 100)){
+
+        if(editMode && (e.getX() >= 0 && e.getX() <= 100 &&  e.getY() >= 0 && e.getY() <= 100))
+        {
            view.incrementItemEnum();
         }
+
         if (editMode && addMapItem &&
-                !(e.getX() >= 0 && e.getX() <= 100 &&  e.getY() >= 0 && e.getY() <= 100)) {
-            for(int i = 0; i < Model.getSprites().size(); i++){
-                Sprite sprite = Model.getSprites().get(i);
-                if(sprite.amIClickingOnYou(e.getX() + View.getCurrentRoomX(),
-                        e.getY() + View.getCurrentRoomY())){
+                !(e.getX() >= 0 && e.getX() <= 100 &&  e.getY() >= 0 && e.getY() <= 100))
+        {
+            for(int i = 0; i < model.getSprites().size(); i++)
+            {
+                Sprite sprite = model.getSprites().get(i);
+                if(sprite.amIClickingOnYou(e.getX() + view.getCurrentRoomX(),
+                        e.getY() + view.getCurrentRoomY()))
+                {
                     spriteCounter++;
                 }
             }
-            if(spriteCounter == 0 && view.getItemEnum() == 0){
-                model.addTree(Math.floorDiv(e.getX()+ View.getCurrentRoomX(), // create new tree with x and y,
+
+            if(spriteCounter == 0 && view.getItemEnum() == 0)
+            {
+                model.addTree(Math.floorDiv(e.getX() + view.getCurrentRoomX(), // create new tree with x and y,
                                 Tree.TREE_WIDTH) * Tree.TREE_WIDTH,                                    // according to current coordinates.
-                        Math.floorDiv(e.getY()+View.getCurrentRoomY(),
+                        Math.floorDiv(e.getY() + view.getCurrentRoomY(),
                                 Tree.TREE_HEIGHT) * Tree.TREE_HEIGHT);
             }
-            if(spriteCounter == 0 && view.getItemEnum() == 1){
-                model.addTreasureChest(e.getX() + View.getCurrentRoomX(), // create new chest
-                        e.getY() + View.getCurrentRoomY());
+
+            if(spriteCounter == 0 && view.getItemEnum() == 1)
+            {
+                model.addTreasureChest(e.getX() + view.getCurrentRoomX(), // create new chest
+                        e.getY() + view.getCurrentRoomY());
             }
         }
 
         if (editMode && !addMapItem &&
-                !(e.getX() >= 0 && e.getX() <= 100 &&  e.getY() >= 0 && e.getY() <= 100)) {
-            for(int i = 0; i < Model.getSprites().size(); i++) {
-                Sprite currentSprite = Model.getSprites().get(i);
+                !(e.getX() >= 0 && e.getX() <= 100 &&  e.getY() >= 0 && e.getY() <= 100))
+        {
+            for(int i = 0; i < model.getSprites().size(); i++)
+            {
+                Sprite currentSprite = model.getSprites().get(i);
                 if(view.getItemEnum() == 0 && currentSprite.isTree() &&
-                        currentSprite.amIClickingOnYou(e.getX() + View.getCurrentRoomX(),
-                        e.getY() + View.getCurrentRoomY())) {
+                        currentSprite.amIClickingOnYou(e.getX() + view.getCurrentRoomX(),
+                        e.getY() + view.getCurrentRoomY()))
+                {
                     model.removeTree(currentSprite);
                 }
                 if(view.getItemEnum() == 1 && currentSprite.isTreasureChest() &&
-                        currentSprite.amIClickingOnYou(e.getX() + View.getCurrentRoomX(),
-                        e.getY() + View.getCurrentRoomY())) {
+                        currentSprite.amIClickingOnYou(e.getX() + view.getCurrentRoomX(),
+                        e.getY() + view.getCurrentRoomY()))
+                {
                     model.removeTreasureChest(currentSprite);
                 }
             }
@@ -166,7 +181,8 @@ public class Controller implements ActionListener, MouseListener, KeyListener
     public boolean update()
     {
         model.getLink().setPCoordinate(model.getLink().getX(), model.getLink().getY());
-        System.out.println(Model.getSprites().size());
+        System.out.println(model.getSprites().size());
+
         if(keyRight)
         {
             model.tellLinkToMoveYoBody("right");
@@ -213,8 +229,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener
     public String toString()
     {
         return "Kep states: UP " + keyUp + ", DOWN " + keyDown + ", LEFT " + keyLeft + ", RIGHT " + keyRight +
-                "Edit mode: " +  editMode + " Add map item: " + addMapItem + ", currentRoomX " +View.getCurrentRoomX()
-                + ", currentRoomY " + View.getCurrentRoomY();
+                "Edit mode: " +  editMode + " Add map item: " + addMapItem;
     }
 
     public void keyTyped(KeyEvent e)

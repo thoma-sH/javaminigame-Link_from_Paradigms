@@ -4,16 +4,18 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Tree extends Sprite{
+public class Tree extends Sprite
+{
     private static BufferedImage treeImage;
     public static final int TREE_WIDTH = 64, TREE_HEIGHT = 80;
 
-    public Tree(int x, int y) {
+    public Tree(int x, int y)
+    {
         super(x, y, TREE_WIDTH, TREE_HEIGHT);
         valid = true;
-        if (treeImage == null) {
+
+        if (treeImage == null)
             treeImage = View.loadImage("images/tree3.png");
-        }
     }
 
     public Tree(Json ob)
@@ -24,13 +26,16 @@ public class Tree extends Sprite{
             treeImage = View.loadImage("images/tree3.png");
     }
 
-    public boolean isTree() {
+    public boolean isTree()
+    {
         return true;
     }
 
     @Override
-    public void fixCollision(Sprite b) {
-
+    public void fixCollision(Sprite b)
+    {
+        x = x;
+        y = y; // Trees are immovable objects.
     }
 
     public Json marshal()
@@ -56,12 +61,14 @@ public class Tree extends Sprite{
     }
 
     @Override
-    public boolean update() {
+    public boolean update()
+    {
         return true;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Tree at (" + x + "," + y + ")";
     }
 

@@ -1,6 +1,6 @@
 // Thomas Hamilton
-// 2 Oct. 2025
-// Assignment 3 - Collision detection and debugging
+// 17 Oct. 2025
+// Assignment 4 - Polymorphism
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -11,7 +11,7 @@ import java.awt.Color;
 public class View extends JPanel
 {
     private final Model model;
-    private static int currentRoomX, currentRoomY;
+    private int currentRoomX, currentRoomY;
     private int itemEnum;
 
     public View(Controller c, Model m)
@@ -36,41 +36,41 @@ public class View extends JPanel
 
     public void moveCameraLeft()
     {
-        currentRoomX -= Game.getWindowWidth();
+        currentRoomX -= Game.WINDOW_WIDTH;
         System.out.println("Move Left. Current Room X: " + currentRoomX +
                 " Current Room Y: " + currentRoomY);
     }
 
     public void moveCameraRight()
     {
-        currentRoomX += Game.getWindowWidth();
+        currentRoomX += Game.WINDOW_WIDTH;
         System.out.println("Move Right. Current Room X: " + currentRoomX +
                 " Current Room Y: " + currentRoomY);
     }
 
     public void moveCameraUp()
     {
-        currentRoomY -= Game.getWindowHeight();
+        currentRoomY -= Game.WINDOW_HEIGHT;
         System.out.println("Move Up. Current Room X: " + currentRoomX +
                 " Current Room Y: " + currentRoomY);
     }
 
     public void moveCameraDown()
     {
-        currentRoomY += Game.getWindowHeight();
+        currentRoomY += Game.WINDOW_HEIGHT;
         System.out.println("Move Down. Current Room X: " + currentRoomX +
                 " Current Room Y: " + currentRoomY);
     }
 
     public void updateRoomView()
     {
-        if(model.getLink().getX() >= (currentRoomX + Game.getWindowWidth()))
+        if(model.getLink().getX() >= (currentRoomX + Game.WINDOW_WIDTH))
             moveCameraRight();
         if(model.getLink().getX() <= currentRoomX)
             moveCameraLeft();
         if((model.getLink().getY() + model.getLink().getHeight()) < currentRoomY)
             moveCameraUp();
-        if((model.getLink().getY() + model.getLink().getHeight()) >= (currentRoomY + Game.getWindowHeight()))
+        if((model.getLink().getY() + model.getLink().getHeight()) >= (currentRoomY + Game.WINDOW_HEIGHT))
             moveCameraDown();
     }
 
@@ -79,8 +79,10 @@ public class View extends JPanel
         updateRoomView();
         g.setColor(new Color(72, 152, 72));
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
-        for(int i = 0; i < Model.getSprites().size(); i++){
-            Model.getSprites().get(i).drawYourself(g, currentRoomX, currentRoomY);
+
+        for(int i = 0; i < model.getSprites().size(); i++)
+        {
+            model.getSprites().get(i).drawYourself(g, currentRoomX, currentRoomY);
         }
 
         if(Controller.isEditMode() && Controller.isAddMapItem())
@@ -96,7 +98,8 @@ public class View extends JPanel
         }
         if(Controller.isEditMode())
         {
-            if(getItemEnum() == 0){
+            if(getItemEnum() == 0)
+            {
                 Tree t = new Tree(currentRoomX, currentRoomY);
                 t.setX(currentRoomX + 18);
                 t.setY(currentRoomY + 10);
@@ -104,7 +107,8 @@ public class View extends JPanel
                 t.setHeight(20);
                 t.drawYourself(g, currentRoomX, currentRoomY);
             }
-            if(getItemEnum() == 1){
+            if(getItemEnum() == 1)
+            {
                 TreasureChest  tc = new TreasureChest(currentRoomX, currentRoomY);
                 tc.setX(currentRoomX + 18);
                 tc.setY(currentRoomY + 20);
@@ -113,9 +117,9 @@ public class View extends JPanel
         }
     }
 
-    public static int getCurrentRoomX() { return currentRoomX; }
+    public int getCurrentRoomX() { return currentRoomX; }
 
-    public static int getCurrentRoomY() { return currentRoomY; }
+    public int getCurrentRoomY() { return currentRoomY; }
 
     public int getItemEnum() {
         return itemEnum % 2;

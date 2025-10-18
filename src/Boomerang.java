@@ -16,27 +16,37 @@ public class Boomerang extends Sprite
     {
         super(x, y, BOOMERANG_WIDTH, BOOMERANG_HEIGHT);
         valid = true;
-        int index = 1;
+        int index = 1; // Starting index for images in folder.
         boomerangImages = new BufferedImage[AMOUNT_OF_BOOMERANG_IMAGES];
-        for(int i = 0; i < AMOUNT_OF_BOOMERANG_IMAGES; i++){
-            if(boomerangImages[i] == null){
-                boomerangImages[i] = View.loadImage("images/boomerang" +
+
+        for(int i = 0; i < AMOUNT_OF_BOOMERANG_IMAGES; i++)
+        {
+            if(boomerangImages[i] == null)
+            {
+                boomerangImages[i] = View.loadImage("images/boomerang" + // Lazy loading for Boomerang class
                         (index++) + ".png");
             }
         }
-        if(dirEnum == RIGHT_ENUM){
+        if(dirEnum == RIGHT_ENUM)
+        {
             xDirection = 1;
             yDirection = 0;
         }
-        if(dirEnum == LEFT_ENUM){
+
+        if(dirEnum == LEFT_ENUM)
+        {
             xDirection = -1;
             yDirection = 0;
         }
-        if(dirEnum == DOWN_ENUM){
+
+        if(dirEnum == DOWN_ENUM)
+        {
             yDirection = 1;
             xDirection = 0;
         }
-        if(dirEnum == UP_ENUM){
+
+        if(dirEnum == UP_ENUM)
+        {
             yDirection = -1;
             xDirection = 0;
         }
@@ -58,13 +68,15 @@ public class Boomerang extends Sprite
         {
             valid = false;
         }
+
         if(b.isTree())
         {
             valid = false;
         }
     }
 
-    public void updateCurrentBoomerangFrame(){
+    public void updateCurrentBoomerangFrame()
+    {
         if(++currentBoomerangFrame >= AMOUNT_OF_BOOMERANG_IMAGES)
             currentBoomerangFrame = 0;
     }
@@ -85,7 +97,8 @@ public class Boomerang extends Sprite
     }
 
     @Override
-    public Json marshal() {
+    public Json marshal()
+    {
         Json ob = Json.newObject();
         ob.add("x", x);
         ob.add("y", y);
@@ -96,7 +109,8 @@ public class Boomerang extends Sprite
     }
 
     @Override
-    public String toString() {
-        return "";
+    public String toString()
+    {
+        return "xDirection: " + xDirection + "yDirection: " + yDirection + "valid: "  + valid;
     }
 }

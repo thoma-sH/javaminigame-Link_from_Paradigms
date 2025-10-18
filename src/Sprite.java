@@ -99,7 +99,7 @@ public abstract class Sprite
                 mouseY >= y && mouseY <= y + height;
     }
 
-    public static boolean isSpriteColliding(Sprite a, Sprite b)
+    public boolean isSpriteColliding(Sprite a, Sprite b)
     {
         return (a.getLeftSide() < b.getRightSide() &&
                 a.getRightSide() > b.getLeftSide() &&
