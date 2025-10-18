@@ -1,3 +1,6 @@
+// Thomas Hamilton
+// 17 Oct. 2025
+// Assignment 4 - Polymorphism
 import java.awt.Graphics;
 import java.awt.*;
 import java.awt.image.BufferedImage;

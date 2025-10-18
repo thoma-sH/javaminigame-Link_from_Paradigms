@@ -1,6 +1,6 @@
 // Thomas Hamilton
-// 2 Oct. 2025
-// Assignment 3 - Collision detection and debugging
+// 17 Oct. 2025
+// Assignment 4 - Polymorphism
 import java.awt.*;
 import java.awt.event.*;
 
@@ -181,7 +181,6 @@ public class Controller implements ActionListener, MouseListener, KeyListener
     public boolean update()
     {
         model.getLink().setPCoordinate(model.getLink().getX(), model.getLink().getY());
-        System.out.println(model.getSprites().size());
 
         if(keyRight)
         {

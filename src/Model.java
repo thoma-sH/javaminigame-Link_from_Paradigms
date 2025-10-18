@@ -1,6 +1,6 @@
 // Thomas Hamilton
-// 2 Oct. 2025
-// Assignment 3 - Collision detection and debugging
+// 17 Oct. 2025
+// Assignment 4 - Polymorphism
 
 import java.util.ArrayList;
 import java.util.Iterator;

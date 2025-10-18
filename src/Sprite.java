@@ -1,3 +1,6 @@
+// Thomas Hamilton
+// 17 Oct. 2025
+// Assignment 4 - Polymorphism
 import java.awt.*;
 
 public abstract class Sprite

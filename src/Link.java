@@ -1,8 +1,6 @@
 // Thomas Hamilton
-// 2 Oct. 2025
-// Assignment 3 - Collision detection and debugging
-
-import java.awt.Graphics;
+// 17 Oct. 2025
+// Assignment 4 - Polymorphism
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
@@ -54,7 +52,6 @@ public class Link extends Sprite
         }
         if(Objects.equals(direction, "up"))
         {
-            System.out.println(this);
             y -= (int) speed;
         }
         if(Objects.equals(direction, "down"))

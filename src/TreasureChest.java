@@ -1,3 +1,6 @@
+// Thomas Hamilton
+// 17 Oct. 2025
+// Assignment 4 - Polymorphism
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -99,13 +102,11 @@ public class TreasureChest extends Sprite
             g.drawImage(closedTreasureChest, x - scrollX,
                     y - scrollY, TREASURE_CHEST_WIDTH,
                     TREASURE_CHEST_HEIGHT, null);
-            System.out.println("Placed chest!");
         }else{
             g.drawImage(openedTreasureChest, x - scrollX,
                     y - scrollY, RUPEE_WIDTH,
                     RUPEE_HEIGHT, null);
         }
-        System.out.println("Drew");
     }
 
     @Override
