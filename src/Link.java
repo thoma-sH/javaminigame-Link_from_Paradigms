@@ -14,6 +14,7 @@ public class Link extends Sprite
     private int currentLinkFrame = 0;
     private int currentLinkDirection = 0;
     private final int LINK_NUM_DIRECTIONS = 4, LINK_MAX_IMAGES_PER_DIRECTION = 11;
+    private int rupeesCollected;
 
     public Link(int x, int y)
     {
@@ -138,8 +139,17 @@ public class Link extends Sprite
         if(b.isTreasureChest())
         {
             if(((TreasureChest)b).getFramesSinceOpen() < TreasureChest.RESUME_DURATION)
+            {
                 setCoords(px, py);
+            }else{
+                System.out.println(rupeesCollected++);
+            }
         }
+    }
+
+    public int returnRupees()
+    {
+        return rupeesCollected;
     }
 
     public void updateCurrentLinkFrame()
@@ -149,7 +159,8 @@ public class Link extends Sprite
     }
 
 
-    public boolean update() {
+    public boolean update()
+    {
         return true;
     }
 

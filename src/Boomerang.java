@@ -58,12 +58,6 @@ public class Boomerang extends Sprite
     @Override
     public boolean isBoomerang() { return true; }
 
-    public void setCoords(int newX, int newY)
-    {
-        x = newX;
-        y = newY;
-    }
-
     @Override
     public void fixCollision(Sprite b)
     {

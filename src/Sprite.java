@@ -8,7 +8,7 @@ public abstract class Sprite
     protected int x, y, width, height;
     protected boolean valid = true;
 
-    public Sprite(int x, int y, int width, int height)
+    protected Sprite(int x, int y, int width, int height)
     {
         this.x = x;
         this.y = y;
@@ -16,93 +16,93 @@ public abstract class Sprite
         this.height = height;
     }
 
-    public int getX()
+    protected int getX()
     {
         return this.x;
     }
 
-    public int getY()
+    protected int getY()
     {
         return this.y;
     }
 
-    public int getWidth()
+    protected int getWidth()
     {
         return this.width;
     }
 
-    public int getHeight()
+    protected int getHeight()
     {
         return this.height;
     }
 
-    public void  setX(int x)
+    protected void  setX(int x)
     {
         this.x = x;
     }
 
-    public void  setY(int y)
+    protected void  setY(int y)
     {
         this.y = y;
     }
 
-    public void  setWidth(int width)
+    protected void  setWidth(int width)
     {
         this.width = width;
     }
 
-    public void  setHeight(int height)
+    protected void  setHeight(int height)
     {
         this.height = height;
     }
 
-    public int getRightSide()
+    protected int getRightSide()
     {
         return this.getX() + this.getWidth();
     }
 
-    public int getRoots()
+    protected int getRoots()
     {
         return this.getY() + this.getHeight();
     }
 
-    public int getLeftSide()
+    protected int getLeftSide()
     {
         return this.getX();
     }
 
-    public int getTop()
+    protected int getTop()
     {
         return this.getY();
     }
 
-    public boolean isLink()
+    protected boolean isLink()
     {
         return false;
     }
 
-    public boolean isTree()
+    protected boolean isTree()
     {
         return false;
     }
 
-    public boolean isTreasureChest()
+    protected boolean isTreasureChest()
     {
         return false;
     }
 
-    public boolean isBoomerang()
+    protected boolean isBoomerang()
     {
         return false;
     }
 
-    public boolean amIClickingOnYou(int mouseX, int mouseY) // ArrayList sprite exists function
+    protected boolean amIClickingOnYou(int mouseX, int mouseY) // ArrayList sprite exists function
     {
         return mouseX >= x && mouseX <= x + width &&
                 mouseY >= y && mouseY <= y + height;
     }
 
-    public boolean isSpriteColliding(Sprite a, Sprite b)
+    protected boolean isSpriteColliding(Sprite a, Sprite b)
     {
         return (a.getLeftSide() < b.getRightSide() &&
                 a.getRightSide() > b.getLeftSide() &&
@@ -110,13 +110,13 @@ public abstract class Sprite
                 a.getRoots() > b.getTop());
     }
 
-    public abstract void fixCollision(Sprite b);
+    protected abstract void fixCollision(Sprite b);
 
-    public abstract boolean update();
+    protected abstract boolean update();
 
-    public abstract void drawYourself(Graphics g, int scrollX, int scrollY);
+    protected abstract void drawYourself(Graphics g, int scrollX, int scrollY);
 
-    public abstract Json marshal();
+    protected abstract Json marshal();
 
     @Override
     public abstract String toString();

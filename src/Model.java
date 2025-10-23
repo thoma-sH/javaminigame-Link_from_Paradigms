@@ -92,6 +92,11 @@ public class Model
         return sprites;
     }
 
+    public int getRupeesCollected()
+    {
+        return link.returnRupees();
+    }
+
     public void update()
     {
         Iterator<Sprite> iter1 = sprites.iterator();
