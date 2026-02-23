@@ -33,9 +33,7 @@ public class Tree extends Sprite
 
     @Override
     public void fixCollision(Sprite b)
-    {
-        x = x;
-        y = y; // Trees are immovable objects.
+    {// Trees are immovable objects.
     }
 
     public Json marshal()
