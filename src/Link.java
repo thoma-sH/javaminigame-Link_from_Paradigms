@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class Link extends Sprite
 {
-    private int px = 100, py = 100;// Since we only have one Link, I will make this static for easier access.
+    private int px = 100, py = 100;
     private double speed = 8;
     public static final int LINK_WIDTH = 42, LINK_HEIGHT = 65;
     private static BufferedImage[][] linkImages;
